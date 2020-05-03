@@ -1,0 +1,97 @@
+============
+Game Manager
+============
+
+1.Move all "escape" package contents to "escape.game" package [DONE]
+2.Re-format all code to be in my preferred style [DONE]
+3.create concrete class for EscapeGameManager [DONE]
+4.Move all "escape.board.coordinate" package contents to "escape.coordinate" [DONE]
+5.make the EscapeGameBuilder:
+	-make a game manager factory that also makes a new board:
+		-make a new PieceType class
+		-create game manager with Hex, frog, omni, no attributes -> not null
+		-create game manager with Orthosquare, horse, orthogonal, jump true, value 10 -> not null
+			- jump -> true
+			- name -> horse
+			- value -> 10
+		-create game manager with piece type with no distance or fly attribute -> escape exception
+		-create game manager with piece type with both distance and fly attributes -> escape exception
+		-create game manager with piece type without movement pattern -> escape exception
+		-create game manager with piece type without name -> escape exception
+		-create a game manager without any piece types -> escape exception
+		-create a hex game with diagonal movement pattern -> escape exception
+		-create a game manager, add observer -> escape exception
+		-create a game manager, remove observer -> escape exception
+6.create movement rules class [DONE]
+7.orthogonal movement [DONE]:
+	-isValidMove((1,1), (4,1)) -> true
+	-isValidMove((1,1), (1,5)) -> true
+	-isValidMove((1,1), (5,5)) -> false
+8.diagonal movement [DONE]:
+	-isValidMove((1,1), (5,5)) -> true
+	-isValidMove((8,1), (3,6)) -> true
+	-isValidMove((1,1), (8,1)) -> false
+	-isValidMove((6,3), (6,8)) -> false
+9.linear movement [DONE]:
+	-isValidMove((0,0) (0,-3), (0,-4)) -> true
+	-isValidMove((0,0), (2,-1), (1,1)) -> false
+	-isValidMove((2,1), (5,1), (8,1)) -> true
+	-isValidMove((2,1), (7,7), (8,8)) -> true
+	-isValidMove((2,1), (2,6), (2,2)) -> false
+10.omni movement [DONE]:
+	-isValidMove((2,1), (6,7)) -> true
+	-isValidMove((3,3), (3,3)) -> false
+	-isValidMove((3,5), (6,5)) -> true
+	-isValidMove((3,5), (1,7)) -> true
+11. Move all escape.game contents back to escape because I change my mind [ DONE]
+12. makeCoordinate for game manager: [done]
+		-hex board, valid (-3,-3) -> not null
+		-ortho board, valid, (5,3) -> not null
+		-ortho board, not valid, (6,9) -> null
+		-square board, valid, (19,20) -> not null
+		-square board, not valid, (21,1) -> null
+13. getPieceAt for game manager: 
+		-square board, get piece at (3,3) -> null
+		-square board, place piece at (3,3), get piece at (3,3) -> not null
+		-square board, get piece at (30,30) -> null
+14. Dijkstra time!!! [LATER CHANGED TO A*]
+	-square coordinates, linear, (1,1) - (2,2) -> not null
+	-square coordinates, linear, unblock (1,2) - (6,7) -> not null
+	-square coordinates, linear, jump (8,1) - (4,5) -> not null
+	-square coordinates, linear, jump, two pieces in the way, (8,1) - (4,5) -> null
+	-square coordinates, linear, fall through exit -> path is null
+	-hex, omni, distance is too long (0,0) - (21,21)-> null
+	-hex, omni, jump, (0,-3) - (0,4) -> not null
+	-square, omni, block at (5,6),  (1,6) - (6,6) -> not null
+	-square, omni, block at (5,6), block at (4,6), (1,6) - (6,6) -> not null
+	-square, omni, block at: {(5,6), (4,6), (4,5), (5,5), (4,7), (5,7)}, (1,6) - (6,6) -> not null
+	-square, omni, putPieceAt(4,6), (1,6) - (6,6) -> not null
+	-square, linear, jump, unblock, piece at (5,5), (5,1) - (5,8) -> not null
+	-hex, linear, (99,0) - (0,0) -> null
+	-hex, omni, jump, (7,0) - (0,0) -> not null
+	-hex, omni, blocks everywhere, (7,0) - (0,0) -> not null
+	-square, linear, unblock, 'to' is a block, (1,1) - (4,1) -> null
+	-orthosquare, omni, (1,1) - (8,8) -> not null
+	-orthosquare, orthogonal, jump, pieces at (2,1) & (3,1), (1,1) - (8,8) -> not null
+	-orthosquare, orthogonal, jump, pieces at (2,1),(3,1),(1,2), (1,1) - (8,8) -> not null
+	-orthosquare, orthogonal, jump, pieces at (2,1),(3,1),(1,2),(1,3), (1,1) - (8,8) -> null
+	-orthosquare, orthogonal, unblock, blocks at (89,53),(87,53),(88,52),(88,54), (1,1) - (88,53) -> not null
+	-orthosquare, orthogonal, jump, piece at (2,1),(3,1),(1,2),(1,3), (1,1) - (1,3) -> not null
+	-orthosquare, orthogonal, piece at (8,7), (7,8),(9,8),(8,9)  (4,4) - (8,8) -> null
+	-square, omni, piece at (8,7),(7,8),(9,8),(8,9),  (4,4) - (8,8) -> not null
+	-hex, linear, piece at (0,1), (0,2) - (0,0) -> null
+	
+15. game manager:
+	-ortho, fly 6, move(1,1) - (7,1) -> true
+	-hex, fly 10, move(1,1) - (1,1) -> false
+	-hex, fly 10, block at (0,-3), move(1,1) - (0,-3) -> false
+	-hex, fly 10, move(0,0) - (5,0) -> true
+	-square, distance 10, move(1,1) - (6,7) other player piece on target -> true
+	-square, distance 10, move(1,1) - (6,7) -> true
+	-getPieceat(invalid coord) -> null
+	-hex, fly 10, other player piece -> true
+	-hex, put piece on exit, getPieceAt exit -> null
+	-hex, place null on piece, getPieceAt -> null
+	-square, put piece on exit, getPieceAt exit -> null
+	-square, place null on piece, getPieceAt -> null
+	-hex, fly 10, too long, (1,1) - (100,100) -> null

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<escapeGameInitializer>
+	<coordinateType>HEX</coordinateType>
+    <locationInitializers>
+        <x>3</x>
+        <y>4</y>
+        <locationType>CLEAR</locationType>
+    </locationInitializers>
+    <locationInitializers>
+        <x>5</x>
+        <y>6</y>
+        <locationType>BLOCK</locationType>
+    </locationInitializers>
+    <pieceTypes>
+        <movementPattern>OMNI</movementPattern>
+        <pieceName>FROG</pieceName>
+        <attributes>
+            <id>DISTANCE</id>
+            <attrType>INTEGER</attrType>
+            <intValue>20</intValue>
+        </attributes>
+        <attributes>
+            <id>FLY</id>
+            <attrType>INTEGER</attrType>
+            <intValue>2</intValue>
+        </attributes>
+    </pieceTypes>
+</escapeGameInitializer>

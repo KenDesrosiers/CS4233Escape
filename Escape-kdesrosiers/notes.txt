@@ -1,0 +1,80 @@
+for path finding:
+	linear:
+		- only proceed with neighbor if it is linear with the starting && ending coordinate
+	
+	ortho & diagonal:
+		- only proceed with neighbor if it is ortho or diagonal to current node
+		
+
+
+
+
+
+
+	
+	
+	
+
+
+
+	
+	if distance:
+		-(unblocked || unblock == true) && (clear || (jump==true && every other place open))
+
+
+
+
+
+
+
+**FRFX**
+
+	-if fly:
+		-if omni, ortho, or diagonal:
+			-if from.distanceTo(to) <= val
+				-return true
+			return false
+		-if linear:
+			-if from and to are linear && from.distanceTo(to) <= val
+				-return true
+			-return false
+			
+			
+	-if distance: (Dijkstra's algorithm, modified, starting and board as input)
+		-set starting vertex distance from start as 0
+		-graph_map.put(start)
+			-current: vertex not in visited w/ smallest distance from the start
+			-find all valid neighbors
+			-for all neighbors:
+				-if not in graph && distance == null:
+					-add neighbor to graph_map
+						-neighbor.distance = 99999
+				-if:
+					-if unblocked || (unblock == true && unblock neighbor is clear, unblocked, linear to current)
+					-if clear || (jump == true && neighbor's neighbor is clear, unblocked, linear to current)
+					
+					-proper movement pattern away from current
+						-LINEAR: linear with start
+						-REST: diagonal, orthogonal, omni
+						-current.distance + current's distance from neighbor < max
+					
+			
+			-if current.distance + current's distance from neighbor < neighbor.distance
+				-neighnor.distance = current.distance + current's distance from neighbor
+				-neighbor.previous = current
+			visited.add(current)
+			
+
+
+		
+			
+			
+			
+			
+-find path, if not false
+
+***'to' conditions********:
+	-if exit, remove piece from 'from' and return true
+	-opposing player, remove it and 'from', place from on 'to', return true
+	-friendly player, return false
+	
