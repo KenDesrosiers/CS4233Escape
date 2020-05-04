@@ -47,8 +47,7 @@ public class GameManager implements EscapeGameManager<Coordinate> {
 	@Override
 	public boolean move(Coordinate from, Coordinate to) {
 		boolean answer = false;
-		boolean valid = true;
-		valid = valid && (b.isCoordinateValid(from) && b.isCoordinateValid(to)) && (b.getPieceAt(from) != null);
+		boolean valid = true && b.isCoordinateValid(from) && b.isCoordinateValid(to) && b.getPieceAt(from) != null;
 		if(valid) {
 			valid = valid && (pieceTypes.get(b.getPieceAt(from).getName()) != null);
 		}

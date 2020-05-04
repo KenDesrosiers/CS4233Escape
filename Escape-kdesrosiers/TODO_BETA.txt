@@ -80,6 +80,7 @@ Game Manager
 	-orthosquare, orthogonal, piece at (8,7), (7,8),(9,8),(8,9)  (4,4) - (8,8) -> null
 	-square, omni, piece at (8,7),(7,8),(9,8),(8,9),  (4,4) - (8,8) -> not null
 	-hex, linear, piece at (0,1), (0,2) - (0,0) -> null
+	-hex, linear, coordinates are the same, (-3,-3) - (-3,-3) -> null
 	
 15. game manager:
 	-ortho, fly 6, move(1,1) - (7,1) -> true
@@ -95,3 +96,4 @@ Game Manager
 	-square, put piece on exit, getPieceAt exit -> null
 	-square, place null on piece, getPieceAt -> null
 	-hex, fly 10, too long, (1,1) - (100,100) -> null
+	-hex, unreachable target, (0,0) - (10,0)

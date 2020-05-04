@@ -17,6 +17,7 @@ import escape.piece.PieceAttributeID;
 import escape.piece.PieceName;
 import escape.piece.PieceType;
 import escape.util.EscapeGameInitializer;
+import escape.util.LocationInitializer;
 import escape.util.PieceTypeInitializer;
 import escape.util.PieceTypeInitializer.PieceAttribute;
 
@@ -94,7 +95,7 @@ public class GameManagerFactory {
 				if ((attributeMap.get(PieceAttributeID.DISTANCE) != null
 						&& attributeMap.get(PieceAttributeID.DISTANCE).getIntValue() < 0)
 						|| (attributeMap.get(PieceAttributeID.FLY) != null
-								&& attributeMap.get(PieceAttributeID.FLY).getIntValue() < 0)) {
+						&& attributeMap.get(PieceAttributeID.FLY).getIntValue() < 0)) {
 					throw new EscapeException("Distance and Fly values can't be less than zero!");
 				}
 				MovementPatternID pattern = (b.getID() == CoordinateID.ORTHOSQUARE && pti.getMovementPattern() == MovementPatternID.OMNI)
@@ -104,6 +105,14 @@ public class GameManagerFactory {
 			}
 		} else {
 			throw new EscapeException("No piece rules! Need atleast one.");
+		}
+		LocationInitializer[] locationList = gameInitializer.getLocationInitializers();
+		if (locationList.length != 0) {
+			for (int i = 0; i < locationList.length; i++) {
+				if (locationList[i].pieceName != null && !PieceTypeMap.containsKey(locationList[i].pieceName)) {
+					throw new EscapeException("This piece cannot be initialized without a defined piece type!");
+				}
+			}
 		}
 		return PieceTypeMap;
 	}
