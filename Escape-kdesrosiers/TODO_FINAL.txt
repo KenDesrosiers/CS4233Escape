@@ -1,0 +1,31 @@
+=====
+Rules
+=====
+
+1. add rules to the reading from xml files [DONE]
+2. put observer into beta code wherever I throw an exception [DONE]
+3. add new game rules:
+	-hex, no rules, never ends, do a few moves -> not null
+	-hex, move to is occupied -> "Combat not possible!"
+	-square, turn limit and score, ends by turn limit -> "PLAYER2 wins"
+		-"Game is over and PLAYER2 has won."
+	-square, turn limit and score, ends turn by score -> "Player1 wins"
+		-square, trying to play after game over -> "Game is over and player1 has won."
+	-square, game over by a tie -> "The game is over! It's a tie."
+	-square, trying to play after game is over -> "The game is over! It was a tie."
+	-hex, from == null -> "There is an issue with the 'from' or 'to' coordinate!"
+	-hex, Player2 first move -> "Player 1 is supposed to play first!"
+	-hex, 1,1 -> "The other player needs to make a move!"
+	-hex, pieceType.get(getPieceAt(from)) == null -> "'from' does not have a piece type associated with it!"
+	-square, remove -> from == null
+	-square, point_conflict
+		-from points = 5, to points = 4 -> from == null, toPiece == fromPiece
+	-square, point_conflict
+		-from points = 3, to points = 4 -> from == null, toPiece != fromPiece
+	square, point_conflict
+		-from point = 5, to points = 5 -> from == null, to == null
+	-hex, remove, linear fly -> from == null
+	-hex, remove, omni fly -> from == null
+	-hex, no rules, linear fly, combat -> "combat not possible"
+	-hex, no rules, omni fly, combat -> "combat not possible"
+	
