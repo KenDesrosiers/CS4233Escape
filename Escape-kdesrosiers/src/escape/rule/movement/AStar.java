@@ -89,11 +89,19 @@ public class AStar {
 		Q.add(from);
 		G.put(from, 0);
 		while(Q.size() != 0) {
-			Collections.sort(Q, new Comparator<Coordinate> () {
+			/*Collections.sort(Q, new Comparator<Coordinate> () {
 				@Override public int compare(Coordinate c1, Coordinate c2) {
 					return (G.get(c1) + c1.distanceTo(to)) - (G.get(c2) + c2.distanceTo(to));
 				}
-			});
+			});*/
+			Collections.sort(Q, new Comparator<Coordinate>() {
+				@Override
+				public int compare(Coordinate c1, Coordinate c2) {
+					Integer first = new Integer(c1.distanceTo(to));
+					Integer second = new Integer(c2.distanceTo(to));
+					return first.compareTo(second);
+					}
+				});
 			Coordinate current = Q.get(0);
 			Q.remove(current);
 			old.add(current);
@@ -188,7 +196,7 @@ public class AStar {
 		}
 		neighbors.removeIf(n-> board.isCoordinateValid(n) == false);
 		neighbors.removeIf(n-> (rule.isValidMoveType(n, current, from, to) == false));
-		neighbors.removeIf(n -> board.getLocationTypeAt(n) == LocationType.EXIT);
+		neighbors.removeIf(n -> board.getLocationTypeAt(n) == LocationType.EXIT && !n.equals(to));
 		neighbors.removeIf(n -> board.getLocationTypeAt(n) == LocationType.BLOCK && !unblock);
 		return neighbors;
 	}

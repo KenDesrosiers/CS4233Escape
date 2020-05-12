@@ -6,6 +6,7 @@
 
 package escape;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import escape.board.Board;
@@ -16,6 +17,7 @@ import escape.piece.MovementPatternID;
 import escape.piece.PieceAttributeID;
 import escape.piece.PieceName;
 import escape.piece.PieceType;
+import escape.rule.*;
 import escape.util.EscapeGameInitializer;
 import escape.util.LocationInitializer;
 import escape.util.PieceTypeInitializer;
@@ -43,7 +45,7 @@ public class GameManagerFactory {
 	 */
 	public static GameManager makeGame() {
 		Board b = makeBoard();
-		return new GameManager(b, initializePieceTypes(b, gameInitializer.getPieceTypes()));
+		return new GameManager(b, initializePieceTypes(b, gameInitializer.getPieceTypes()), setRules(gameInitializer.getRules()));
 	}
 
 	/**
@@ -115,5 +117,20 @@ public class GameManagerFactory {
 			}
 		}
 		return PieceTypeMap;
+	}
+	
+	public static HashMap<RuleID, Rule> setRules(Rule ... rules) {
+		HashMap<RuleID, Rule> theRules = new HashMap<RuleID, Rule>();
+		ArrayList<RuleID> ids = new ArrayList<RuleID>();
+		if(rules != null) {
+			for(Rule r : rules) {
+				theRules.put(r.getId(), r);
+				ids.add(r.getId());
+			}
+			if(ids.contains(RuleID.REMOVE) && ids.contains(RuleID.POINT_CONFLICT)) {
+				throw new EscapeException("Cannot have both!");
+			}
+		}
+		return theRules;
 	}
 }

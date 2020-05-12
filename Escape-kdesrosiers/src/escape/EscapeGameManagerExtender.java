@@ -6,12 +6,14 @@
 
 package escape;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import escape.board.Board;
 import escape.piece.PieceName;
 import escape.piece.PieceType;
+import escape.rule.Rule;
 
 /**
 * Enter a description

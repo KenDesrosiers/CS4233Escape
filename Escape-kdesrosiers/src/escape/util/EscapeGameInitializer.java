@@ -6,50 +6,53 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Copyright ©2020 Gary F. Pollice
  *******************************************************************************/
 
 package escape.util;
 
-import java.util.Arrays;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import escape.board.coordinate.CoordinateID;
+import escape.rule.Rule;
 
 /**
  * An example of reading a game configuration file and the board and piece
- * initializers that it 
+ * initializers that it
  * @version Apr 22, 2020
  */
 @XmlRootElement
 public class EscapeGameInitializer {
 	private CoordinateID coordinateType;
-	
+
 	// Board items
 	private int xMax, yMax;
 	private LocationInitializer[] locationInitializers;
-	
+
 	// Piece items
 	private PieceTypeInitializer[] pieceTypes; 	// At least one
-    
-    public EscapeGameInitializer() {
-        // Needed for JAXB
-    }
 
-    /**
-     * @return the coordinateType
-     */
-    public CoordinateID getCoordinateType() {
-        return coordinateType;
-    }
+	// Game Rules
+	private Rule[] rules;
 
-    /**
-     * @param coordinateType the coordinateType to set
-     */
-    public void setCoordinateType(CoordinateID coordinateType) {
-        this.coordinateType = coordinateType;
-    }
+	public EscapeGameInitializer() {
+		// Needed for JAXB
+	}
+
+	/**
+	 * @return the coordinateType
+	 */
+	public CoordinateID getCoordinateType() {
+		return coordinateType;
+	}
+
+	/**
+	 * @param coordinateType the coordinateType to set
+	 */
+	public void setCoordinateType(CoordinateID coordinateType) {
+		this.coordinateType = coordinateType;
+	}
 
 	/**
 	 * @return the xMax
@@ -105,5 +108,13 @@ public class EscapeGameInitializer {
 	 */
 	public void setPieceTypes(PieceTypeInitializer ... types) {
 		this.pieceTypes = types;
-	}	
+	}
+
+	public Rule[] getRules() {
+		return rules;
+	}
+
+	public void setRules(Rule... rules) {
+		this.rules = rules;
+	}
 }

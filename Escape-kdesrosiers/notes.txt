@@ -77,4 +77,43 @@ for path finding:
 	-if exit, remove piece from 'from' and return true
 	-opposing player, remove it and 'from', place from on 'to', return true
 	-friendly player, return false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+start of move:
+	-block if game is over
+	-check to see if first move is PLAYER1
 	
+
+when executing move:
+	-if to is not null:
+		-check if game can engage in combat
+			-handle and update scores (remove & point_conflict methods)
+		-else return false
+after:
+	-check if game is over

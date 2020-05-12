@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import escape.EscapeGameBuilder;
@@ -41,6 +42,11 @@ import java.util.*;
  * @version Apr 24, 2020
  */
 class BetaEscapeGameTests {
+	GameObserver o;
+	@BeforeEach
+	public void setupTest() {
+		o = new TestObserver();
+	}
     @Test
     void hexTest() throws Exception {
         EscapeGameBuilder egb 
@@ -123,30 +129,6 @@ class BetaEscapeGameTests {
 		EscapeException exception = Assertions.assertThrows(EscapeException.class,
 				() -> {
 					EscapeGameManager emg = ebg.makeGameManager();
-				});
-		assertEquals(s, exception.getMessage());
-    }
-    
-    @Test
-    void noGameObserverYet() throws Exception{
-		String s = "Not implemented";
-		EscapeGameBuilder ebg = new EscapeGameBuilder(new File("config/SampleHexEscapeGame.xml"));
-		EscapeException exception = Assertions.assertThrows(EscapeException.class,
-				() -> {
-					EscapeGameManager emg = ebg.makeGameManager();
-					emg.addObserver(null);
-				});
-		assertEquals(s, exception.getMessage());
-    }
-    
-    @Test
-    void noGameObserverYet2() throws Exception{
-		String s = "Not implemented";
-		EscapeGameBuilder ebg = new EscapeGameBuilder(new File("config/SampleHexEscapeGame.xml"));
-		EscapeException exception = Assertions.assertThrows(EscapeException.class,
-				() -> {
-					EscapeGameManager emg = ebg.makeGameManager();
-					emg.removeObserver(null);
 				});
 		assertEquals(s, exception.getMessage());
     }
@@ -258,9 +240,10 @@ class BetaEscapeGameTests {
     	EscapeGameBuilder egb 
         = new EscapeGameBuilder(new File("config/SampleSquareEscapeGame.xml"));
         EscapeGameManager emg = egb.makeGameManager();
+        emg.addObserver(o);
         emg.getBoard().putPieceAt(new EscapePiece(Player.PLAYER1, PieceName.HORSE), emg.makeCoordinate(1, 1));
         emg.getBoard().putPieceAt(new EscapePiece(Player.PLAYER2, PieceName.HORSE), emg.makeCoordinate(6, 7));
-        assertTrue(emg.move(emg.makeCoordinate(1, 1),emg.makeCoordinate(6, 7)));
+        assertFalse(emg.move(emg.makeCoordinate(1, 1),emg.makeCoordinate(6, 7)));
     }
     
     @Test
@@ -335,6 +318,7 @@ class BetaEscapeGameTests {
     void flyTooLong() throws Exception{
     	EscapeGameBuilder egb = new EscapeGameBuilder(new File("config/SampleHexEscapeGame.xml"));
         EscapeGameManager emg = egb.makeGameManager();
+        emg.addObserver(o);
         emg.getBoard().putPieceAt(new EscapePiece(Player.PLAYER2, PieceName.SNAIL), emg.makeCoordinate(1, 1));
         assertFalse(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(100, 100)));
     }
