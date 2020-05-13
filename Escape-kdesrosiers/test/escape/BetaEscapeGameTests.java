@@ -22,10 +22,7 @@ import org.junit.jupiter.api.Test;
 
 import escape.EscapeGameBuilder;
 import escape.EscapeGameManager;
-import escape.board.Board;
 import escape.board.LocationType;
-import escape.board.coordinate.Coordinate;
-import escape.board.coordinate.HexCoordinate;
 import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 import escape.piece.PieceAttributeID;
@@ -38,7 +35,7 @@ import java.util.*;
 
 
 /**
- * Description
+ * tests the movement of pieces
  * @version Apr 24, 2020
  */
 class BetaEscapeGameTests {

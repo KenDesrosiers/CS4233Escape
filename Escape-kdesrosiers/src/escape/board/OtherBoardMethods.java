@@ -8,9 +8,7 @@ package escape.board;
 
 import java.util.function.BiPredicate;
 
-import escape.board.coordinate.Coordinate;
-import escape.board.coordinate.CoordinateID;
-import escape.piece.MovementPatternID;
+import escape.board.coordinate.*;
 
 /**
 * An interface for other methods the boards need

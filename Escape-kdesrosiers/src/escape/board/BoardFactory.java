@@ -8,7 +8,6 @@ package escape.board;
 
 
 import escape.board.coordinate.*;
-import escape.exception.EscapeException;
 import escape.piece.*;
 import escape.util.*;
 
@@ -17,36 +16,36 @@ import escape.util.*;
 * @version Apr 14, 2020
 */
 
-public class BoardFactory {
-	private static EscapeGameInitializer egi;
+public class BoardFactory implements Factory{
+	private static EscapeGameInitializer i;
 	
 	/**
 	 * a constructor for the BoardFactory
 	 * @param b a board initializer object
 	 */
-	public BoardFactory(EscapeGameInitializer egi) {
-		this.egi = egi;
+	public BoardFactory(EscapeGameInitializer i) {
+		this.i = i;
 	}
 	
 	/**
 	 * This method makes a new board based on the board initializer
 	 * @return the new board
 	 */
-	public static Board makeBoard() {
+	public Board make() {
 		Board board = null;
-		switch(egi.getCoordinateType()) {
+		switch(i.getCoordinateType()) {
 		case HEX:
-			board = new HexBoard(egi.getxMax(), egi.getyMax(), CoordinateID.HEX);
+			board = new HexBoard(i.getxMax(), i.getyMax(), CoordinateID.HEX);
 			break;
 		case SQUARE:
-			board = new SquareBoard(egi.getxMax(), egi.getyMax(), CoordinateID.SQUARE);
+			board = new SquareBoard(i.getxMax(), i.getyMax(), CoordinateID.SQUARE);
 			break;
 		case ORTHOSQUARE:
-			board = new SquareBoard(egi.getxMax(), egi.getyMax(), CoordinateID.ORTHOSQUARE);
+			board = new SquareBoard(i.getxMax(), i.getyMax(), CoordinateID.ORTHOSQUARE);
 			break;
 		}
 		
-		initializeBoard(board, egi.getLocationInitializers());
+		initializeBoard(board, i.getLocationInitializers());
 		return board;
 	}
 	
@@ -59,7 +58,7 @@ public class BoardFactory {
 		Coordinate c = null;
 		if(initializers.length != 0) {
 			for (LocationInitializer li : initializers) {
-				switch(egi.getCoordinateType()) {
+				switch(i.getCoordinateType()) {
 				case HEX:
 					c = HexCoordinate.makeCoordinate(li.x, li.y);
 					break;

@@ -21,7 +21,7 @@ import escape.piece.*;
 
 
 /**
-* Enter a description
+* tests game with rules
 * @version May 10, 2020
 */
 public class FinalTests {

@@ -16,6 +16,7 @@ import java.io.*;
 import javax.xml.bind.*;
 
 import escape.util.EscapeGameInitializer;
+import escape.util.Factory;
 
 /**
  * This class is what a client will use to create an instance of a game, given
@@ -25,7 +26,7 @@ import escape.util.EscapeGameInitializer;
  */
 public class EscapeGameBuilder {
     private EscapeGameInitializer gameInitializer;
-    private GameManagerFactory gamefactory;
+    private Factory<EscapeGameManager> gamefactory;
     
     /**
      * The constructor takes a file that points to the Escape game
@@ -49,6 +50,6 @@ public class EscapeGameBuilder {
      * @return
      */
     public EscapeGameManager makeGameManager() {
-    	return gamefactory.makeGame();
+    	return gamefactory.make();
     }
 }

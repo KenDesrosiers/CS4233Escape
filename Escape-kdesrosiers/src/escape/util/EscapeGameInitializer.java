@@ -23,7 +23,7 @@ import escape.rule.Rule;
  * @version Apr 22, 2020
  */
 @XmlRootElement
-public class EscapeGameInitializer {
+public class EscapeGameInitializer{
 	private CoordinateID coordinateType;
 
 	// Board items

@@ -6,6 +6,9 @@
 
 package escape.board.coordinate;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -90,6 +93,22 @@ public class HexCoordinate implements Coordinate {
 	@Override
 	public int getX() {
 		return x;
+	}
+	
+	/**
+	 *@see escape.board.coordinate.OtherCoordinateMethods#getNeighbors()
+	 */
+	public ArrayList<Coordinate> getNeighbors(){
+		ArrayList<Point> modifiersForHex = new ArrayList<Point>(Arrays.asList(new Point(0,1), new Point(0,-1), new Point(-1,1),
+				new Point(1,0), new Point(-1,0), new Point(1,-1)));
+		ArrayList<Coordinate> neighbors = new ArrayList<Coordinate>();
+		for(Point p : modifiersForHex) {
+			int i = modifiersForHex.indexOf(p);
+			int xMod = (int) modifiersForHex.get(i).getX();
+			int yMod = (int) modifiersForHex.get(i).getY();
+			neighbors.add(HexCoordinate.makeCoordinate(x+xMod,y+yMod));
+		}
+		return neighbors;
 	}
 
 }

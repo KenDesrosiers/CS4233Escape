@@ -283,12 +283,18 @@ public class GameManager implements EscapeGameManager<Coordinate> {
 		return pieceTypes;
 	}
 	
+	/**
+	 *@see escape.EscapeGameManager#addObserver(GameObserver)
+	 */
 	@Override
 	public GameObserver addObserver(GameObserver o) {
 		this.observer = o;
 		return observer;
 	}
 	
+	/**
+	 *@see escape.EscapeGameManager#removeObserver(GameObserver)
+	 */
 	@Override
 	public GameObserver removeObserver(GameObserver o) {
 		if(!observer.equals(o)) {
@@ -298,10 +304,19 @@ public class GameManager implements EscapeGameManager<Coordinate> {
 		return o;
 	}
 	
+	/**
+	 * Notifies the observer
+	 * @param s the message
+	 */
 	public void notifyObserver(String s) {
 		observer.notify(s);
 	}
 	
+	/**
+	 * sets the point values for the from and to 
+	 * @param c1 from
+	 * @param c2 to
+	 */
 	public void setPointValues(Coordinate c1, Coordinate c2) {
 		ArrayList<Coordinate> list = new ArrayList<Coordinate>();
 		list.add(c1);
@@ -320,6 +335,12 @@ public class GameManager implements EscapeGameManager<Coordinate> {
 		}
 	}
 	
+	/**
+	 * sees whether a piece can engage in combat or not, and if it succeeds
+	 * @param from the from coordinate
+	 * @param to the to coordinate
+	 * @return true if so, false if not
+	 */
 	public boolean combat(Coordinate from, Coordinate to) {
 		EscapePiece fromPiece = b.getPieceAt(from);
 		EscapePiece toPiece = b.getPieceAt(to);

@@ -23,7 +23,7 @@ import escape.piece.Player;
 import escape.rule.movement.AStar;
 
 /**
- * Enter a description
+ * tests the A* algorithm
  * @version Apr 29, 2020
  */
 

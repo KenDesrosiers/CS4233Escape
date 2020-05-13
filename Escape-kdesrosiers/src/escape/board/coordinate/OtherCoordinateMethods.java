@@ -6,6 +6,8 @@
 
 package escape.board.coordinate;
 
+import java.util.ArrayList;
+
 /**
 * an interface for other methods that coordinates need
 * @version Apr 16, 2020
@@ -25,5 +27,11 @@ public interface OtherCoordinateMethods {
 	 * @return the y
 	 */
 	int getY();
+	
+	/**
+	 * Gets all viable neighbors of a coordinate
+	 * @return an array of neighbors
+	 */
+	ArrayList<Coordinate> getNeighbors();
 }
 

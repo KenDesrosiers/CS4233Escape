@@ -20,7 +20,7 @@ import escape.piece.*;
  * public rather than 
  * @version Mar 30, 2020
  */
-public class LocationInitializer {
+public class LocationInitializer{
 	public int x, y;
 	public LocationType locationType;
 	public Player player;

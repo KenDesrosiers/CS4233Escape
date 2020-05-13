@@ -6,6 +6,9 @@
 
 package escape.board.coordinate;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -83,6 +86,21 @@ public class OrthoSquareCoordinate implements Coordinate {
 	@Override
 	public int getY() {
 		return y;
+	}
+	
+	/**
+	 *@see escape.board.coordinate.OtherCoordinateMethods#getNeighbors()
+	 */
+	public ArrayList<Coordinate> getNeighbors(){
+		ArrayList<Point> modifiersForOrtho = new ArrayList<Point>(Arrays.asList(new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1)));
+		ArrayList<Coordinate> neighbors = new ArrayList<Coordinate>();
+		for(Point p : modifiersForOrtho) {
+			int i = modifiersForOrtho.indexOf(p);
+			int xMod = (int) modifiersForOrtho.get(i).getX();
+			int yMod = (int) modifiersForOrtho.get(i).getY();
+			neighbors.add(OrthoSquareCoordinate.makeCoordinate(x+xMod,y+yMod));
+		}
+		return neighbors;
 	}
 }
 

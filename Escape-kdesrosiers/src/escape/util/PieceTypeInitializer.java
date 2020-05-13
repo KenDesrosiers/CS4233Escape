@@ -12,14 +12,13 @@
 
 package escape.util;
 
-import java.util.Arrays;
 import escape.piece.*;
 
 /**
  * Description
  * @version Apr 21, 2020
  */
-public class PieceTypeInitializer {
+public class PieceTypeInitializer{
     /**
      * Inner class that's a Java Bean.
      * @version Apr 21, 2020

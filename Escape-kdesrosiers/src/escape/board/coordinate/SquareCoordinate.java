@@ -11,8 +11,10 @@
  *******************************************************************************/
 package escape.board.coordinate;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
  * This is an example of how a SquareCoordinate might be organized.
@@ -90,5 +92,21 @@ public class SquareCoordinate implements Coordinate {
 		}
 		SquareCoordinate other = (SquareCoordinate) obj;
 		return x == other.x && y == other.y;
+	}
+	
+	/**
+	 *@see escape.board.coordinate.OtherCoordinateMethods#getNeighbors()
+	 */
+	public ArrayList<Coordinate> getNeighbors(){
+		ArrayList<Point> modifiersForSquare = new ArrayList<Point>(Arrays.asList(new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1),
+				new Point(1,-1), new Point(1,1), new Point(-1,-1), new Point(-1,1)));
+		ArrayList<Coordinate> neighbors = new ArrayList<Coordinate>();
+		for(Point p : modifiersForSquare) {
+			int i = modifiersForSquare.indexOf(p);
+			int xMod = (int) modifiersForSquare.get(i).getX();
+			int yMod = (int) modifiersForSquare.get(i).getY();
+			neighbors.add(SquareCoordinate.makeCoordinate(x+xMod,y+yMod));
+		}
+		return neighbors;
 	}
 }

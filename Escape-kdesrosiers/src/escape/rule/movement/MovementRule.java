@@ -8,7 +8,6 @@ package escape.rule.movement;
 
 import escape.board.Board;
 import escape.board.coordinate.Coordinate;
-import escape.board.coordinate.CoordinateID;
 import escape.piece.MovementPatternID;
 
 /**

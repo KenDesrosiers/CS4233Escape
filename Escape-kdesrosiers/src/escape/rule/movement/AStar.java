@@ -6,9 +6,7 @@
 
 package escape.rule.movement;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -16,9 +14,6 @@ import java.util.HashMap;
 import escape.board.Board;
 import escape.board.LocationType;
 import escape.board.coordinate.Coordinate;
-import escape.board.coordinate.HexCoordinate;
-import escape.board.coordinate.OrthoSquareCoordinate;
-import escape.board.coordinate.SquareCoordinate;
 import escape.piece.MovementPatternID;
 import escape.piece.PieceAttributeID;
 import escape.piece.PieceName;
@@ -89,11 +84,6 @@ public class AStar {
 		Q.add(from);
 		G.put(from, 0);
 		while(Q.size() != 0) {
-			/*Collections.sort(Q, new Comparator<Coordinate> () {
-				@Override public int compare(Coordinate c1, Coordinate c2) {
-					return (G.get(c1) + c1.distanceTo(to)) - (G.get(c2) + c2.distanceTo(to));
-				}
-			});*/
 			Collections.sort(Q, new Comparator<Coordinate>() {
 				@Override
 				public int compare(Coordinate c1, Coordinate c2) {
@@ -160,40 +150,7 @@ public class AStar {
 	 * @return a list of neighbors
 	 */
 	ArrayList<Coordinate> findAllValidNeighbors(Coordinate current) {
-		int x = current.getX();
-		int y = current.getY();
-		ArrayList<Coordinate> neighbors = new ArrayList<Coordinate>();
-		ArrayList<Point> modifiersForHex = new ArrayList<Point>(Arrays.asList(new Point(0,1), new Point(0,-1), new Point(-1,1),
-				new Point(1,0), new Point(-1,0), new Point(1,-1)));
-		ArrayList<Point> modifiersForOrtho = new ArrayList<Point>(Arrays.asList(new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1)));
-		ArrayList<Point> modifiersForSquare = new ArrayList<Point>(Arrays.asList(new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1),
-				new Point(1,-1), new Point(1,1), new Point(-1,-1), new Point(-1,1)));
-		switch(board.getID()) {
-		case HEX:
-			for(Point p : modifiersForHex) {
-				int i = modifiersForHex.indexOf(p);
-				int xMod = (int) modifiersForHex.get(i).getX();
-				int yMod = (int) modifiersForHex.get(i).getY();
-				neighbors.add(HexCoordinate.makeCoordinate(x+xMod,y+yMod));
-			}
-			break;
-		case ORTHOSQUARE:
-			for(Point p : modifiersForOrtho) {
-				int i = modifiersForOrtho.indexOf(p);
-				int xMod = (int) modifiersForOrtho.get(i).getX();
-				int yMod = (int) modifiersForOrtho.get(i).getY();
-				neighbors.add(OrthoSquareCoordinate.makeCoordinate(x+xMod,y+yMod));
-			}
-			break;
-		case SQUARE:
-			for(Point p : modifiersForSquare) {
-				int i = modifiersForSquare.indexOf(p);
-				int xMod = (int) modifiersForSquare.get(i).getX();
-				int yMod = (int) modifiersForSquare.get(i).getY();
-				neighbors.add(SquareCoordinate.makeCoordinate(x+xMod,y+yMod));
-			}
-			break;
-		}
+		ArrayList<Coordinate> neighbors = current.getNeighbors();
 		neighbors.removeIf(n-> board.isCoordinateValid(n) == false);
 		neighbors.removeIf(n-> (rule.isValidMoveType(n, current, from, to) == false));
 		neighbors.removeIf(n -> board.getLocationTypeAt(n) == LocationType.EXIT && !n.equals(to));

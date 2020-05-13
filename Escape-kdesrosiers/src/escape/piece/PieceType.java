@@ -7,7 +7,6 @@
 package escape.piece;
 
 import java.util.*;
-import java.util.Map;
 
 import escape.util.PieceTypeInitializer.PieceAttribute;
 

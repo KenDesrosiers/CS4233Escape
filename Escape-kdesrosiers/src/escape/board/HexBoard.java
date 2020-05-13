@@ -20,7 +20,7 @@ import escape.piece.EscapePiece;
 * @version Apr 13, 2020
 */
 
-public class HexBoard implements Board<HexCoordinate> {
+public class HexBoard implements Board<Coordinate> {
 	Map<Coordinate, LocationType> squares;
 	Map<Coordinate, EscapePiece> pieces;
 	private final int xMax, yMax;
@@ -43,7 +43,7 @@ public class HexBoard implements Board<HexCoordinate> {
 	 * @see escape.board.Board#getPieceAt(escape.board.coordinate.Coordinate)
 	 */
 	@Override
-	public EscapePiece getPieceAt(HexCoordinate coord) {
+	public EscapePiece getPieceAt(Coordinate coord) {
 		return pieces.get(coord);
 	}
 	
@@ -51,7 +51,7 @@ public class HexBoard implements Board<HexCoordinate> {
 	 * @see escape.board.Board#putPieceAt(escape.piece.EscapePiece, escape.board.coordinate.Coordinate)
 	 */
 	@Override
-	public void putPieceAt(EscapePiece p, HexCoordinate coord) {
+	public void putPieceAt(EscapePiece p, Coordinate coord) {
 		if(isCoordinateValid(coord)) {
 			if(squares.get(coord) == LocationType.EXIT || p == null) {
 				pieces.remove(coord);

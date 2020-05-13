@@ -13,17 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import escape.EscapeGameBuilder;
 import escape.EscapeGameManager;
-import escape.board.coordinate.*;
 import escape.piece.MovementPatternID;
-import escape.piece.PieceAttributeID;
-import escape.piece.PieceName;
 import escape.rule.movement.*;
-import escape.util.PieceTypeInitializer.PieceAttribute;
-
-import java.util.*;
 
 /**
-* Enter a description
+* tests the movement rules
 * @version Apr 26, 2020
 */
 

@@ -19,6 +19,7 @@ import escape.piece.PieceName;
 import escape.piece.PieceType;
 import escape.rule.*;
 import escape.util.EscapeGameInitializer;
+import escape.util.Factory;
 import escape.util.LocationInitializer;
 import escape.util.PieceTypeInitializer;
 import escape.util.PieceTypeInitializer.PieceAttribute;
@@ -28,24 +29,24 @@ import escape.util.PieceTypeInitializer.PieceAttribute;
  * @version Apr 25, 2020
  */
 
-public class GameManagerFactory {
-	private static EscapeGameInitializer gameInitializer;
+public class GameManagerFactory implements Factory{
+	private static EscapeGameInitializer i;
 
 	/**
 	 * Constructor for the game factory
 	 * @param gameInitializer
 	 */
-	public GameManagerFactory(EscapeGameInitializer gameInitializer) {
-		this.gameInitializer = gameInitializer;
+	public GameManagerFactory(EscapeGameInitializer initializer) {
+		this.i = initializer;
 	}
 
 	/**
 	 * This method returns a new game manager based on the game initializer file
 	 * @return a new game manager
 	 */
-	public static GameManager makeGame() {
+	public GameManager make() {
 		Board b = makeBoard();
-		return new GameManager(b, initializePieceTypes(b, gameInitializer.getPieceTypes()), setRules(gameInitializer.getRules()));
+		return new GameManager(b, initializePieceTypes(b, i.getPieceTypes()), setRules(i.getRules()));
 	}
 
 	/**
@@ -53,8 +54,8 @@ public class GameManagerFactory {
 	 * @return the new board
 	 */
 	public static Board makeBoard() {
-		BoardFactory boardFactory = new BoardFactory(gameInitializer);
-		return boardFactory.makeBoard();
+		Factory<Board> boardFactory = new BoardFactory(i);
+		return boardFactory.make();
 	}
 
 	/**
@@ -78,9 +79,9 @@ public class GameManagerFactory {
 				}
 				HashMap<PieceAttributeID, PieceAttribute> attributeMap = new HashMap<PieceAttributeID, PieceAttribute>();
 				if((pti.getMovementPattern() != MovementPatternID.ORTHOGONAL && pti.getMovementPattern() != MovementPatternID.DIAGONAL
-						&& gameInitializer.getCoordinateType() == CoordinateID.HEX)
-						|| (pti.getMovementPattern() != MovementPatternID.DIAGONAL && gameInitializer.getCoordinateType() == CoordinateID.ORTHOSQUARE)
-						|| (gameInitializer.getCoordinateType() == CoordinateID.SQUARE)) {
+						&& i.getCoordinateType() == CoordinateID.HEX)
+						|| (pti.getMovementPattern() != MovementPatternID.DIAGONAL && i.getCoordinateType() == CoordinateID.ORTHOSQUARE)
+						|| (i.getCoordinateType() == CoordinateID.SQUARE)) {
 					if (pti.getAttributes() != null) {
 						for (PieceAttribute attr : pti.getAttributes()) {
 							attributeMap.put(attr.getId(), attr);
@@ -108,7 +109,7 @@ public class GameManagerFactory {
 		} else {
 			throw new EscapeException("No piece rules! Need atleast one.");
 		}
-		LocationInitializer[] locationList = gameInitializer.getLocationInitializers();
+		LocationInitializer[] locationList = i.getLocationInitializers();
 		if (locationList.length != 0) {
 			for (int i = 0; i < locationList.length; i++) {
 				if (locationList[i].pieceName != null && !PieceTypeMap.containsKey(locationList[i].pieceName)) {
@@ -119,6 +120,12 @@ public class GameManagerFactory {
 		return PieceTypeMap;
 	}
 	
+	
+	/**
+	 * Initializes the game manager with rules
+	 * @param rules the rules
+	 * @return a hashmap with the rules
+	 */
 	public static HashMap<RuleID, Rule> setRules(Rule ... rules) {
 		HashMap<RuleID, Rule> theRules = new HashMap<RuleID, Rule>();
 		ArrayList<RuleID> ids = new ArrayList<RuleID>();
